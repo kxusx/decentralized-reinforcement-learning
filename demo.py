@@ -56,10 +56,7 @@ def run():
         
         # Reroute a random vehicle at each intersection every 30 seconds
         if traci.simulation.getTime() % 30 == 0:
-            for intersection_id in traci.trafficlight.getIDList():
-                for lane_id in traci.trafficlight.getControlledLanes(intersection_id):
-                    for vehicle_id in traci.lane.getLastStepVehicleIDs(lane_id):
-                        reroute_vehicle(vehicle_id)
+            reroute_vehicle(0)
 
     traci.close()
     sys.stdout.flush()

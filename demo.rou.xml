@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2023-03-13 17:51:16 by Eclipse SUMO duarouter Version 1.16.0
+<!-- generated on 2023-03-13 18:08:23 by Eclipse SUMO duarouter Version 1.16.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
 
     <input>
@@ -20,8 +20,12 @@
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-    <vehicle id="0" depart="0.00">
-        <route edges="D0E0 E0E1 E1D1 D1C1 C1B1 B1A1 A1A0"/>
+     <vType id = "ev"
+    vClass="emergency" length = "7" accel = "5.5" decel= "2.2"  sigma  = "1.0"
+    maxSpeed = "20" guiShape = "emergency" speedFactor = "2.0" minGapLat = "0.2"/>
+
+    <vehicle id="0" depart="0.00" type="ev" >
+        <route edges="A0B0 B0B1 B1B2 B2B3 B3B4 B4A4 A4A3"/>
     </vehicle>
     <vehicle id="1" depart="1.00">
         <route edges="B2B3 B3B2 B2B1 B1B0"/>
