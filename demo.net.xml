@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<net>
+  <location netOffset="0,0" convBoundary="0.0,0.0,500.0,500.0" origBoundary="0.0,0.0,500.0,500.0" projParameter="!"/>
+  <edge id="n0" from=":n1_0" to="n0_0" priority="1" type="highway.primary" />
+  <edge id="n1" from="n1_0" to=":n0_0" priority="1" type="highway.primary" />
+  <edge id="e0" from=":e0_1" to="e0_0" priority="1" type="highway.primary" />
+  <edge id="e1" from="e0_1" to=":e0_0" priority="1" type="highway.primary" />
+  <edge id="s0" from=":s1_0" to="s0_0" priority="1" type="highway.primary" />
+  <edge id="s1" from="s1_0" to=":s0_0" priority="1" type="highway.primary" />
+  <edge id="w0" from=":w0_1" to="w0_0" priority="1" type="highway.primary" />
+  <edge id="w1" from="w0_1" to=":w0_0" priority="1" type="highway.primary" />
+  <junction id="n0_0" type="dead_end" x="250.00" y="0.00" incLanes="1" intLanes="1" shape="0.00,-5.00 0.00,5.00" />
+  <junction id="n1_0" type="dead_end" x="250.00" y="500.00" incLanes="1" intLanes="1" shape="0.00,-5.00 0.00,5.00" />
+</net>
