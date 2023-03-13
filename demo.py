@@ -1,13 +1,27 @@
-import traci
-import random
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import os
 import sys
+import optparse
 
+# we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
+
+
+from sumolib import checkBinary  # Checks for the binary in environ vars
+import traci
+
+
+def get_options():
+    opt_parser = optparse.OptionParser()
+    opt_parser.add_option("--nogui", action="store_true",
+                         default=False, help="run the commandline version of sumo")
+    options, args = opt_parser.parse_args()
+    return options
 
 def reroute_vehicle(vehicle_id):
     # Get the current route of the vehicle
@@ -33,13 +47,31 @@ def reroute_vehicle(vehicle_id):
     traci.vehicle.rerouteTraveltime(vehicle_id, best_route)
     traci.vehicle.moveTo(vehicle_id, best_route[0], current_position)
 
-# Main simulation loop
-while traci.simulation.getMinExpectedNumber() > 0:
-    traci.simulationStep()
-    
-    # Reroute a random vehicle at each intersection every 30 seconds
-    if traci.simulation.getTime() % 30 == 0:
-        for intersection_id in traci.trafficlight.getIDList():
-            for lane_id in traci.trafficlight.getControlledLanes(intersection_id):
-                for vehicle_id in traci.lane.getLastStepVehicleIDs(lane_id):
-                    reroute_vehicle(vehicle_id)
+
+# contains TraCI control loop
+def run():
+    step = 0
+    while traci.simulation.getMinExpectedNumber() > 0:
+        traci.simulationStep()
+        
+        # Reroute a random vehicle at each intersection every 30 seconds
+        if traci.simulation.getTime() % 30 == 0:
+            for intersection_id in traci.trafficlight.getIDList():
+                for lane_id in traci.trafficlight.getControlledLanes(intersection_id):
+                    for vehicle_id in traci.lane.getLastStepVehicleIDs(lane_id):
+                        reroute_vehicle(vehicle_id)
+
+    traci.close()
+    sys.stdout.flush()
+                
+if __name__ == '__main__':
+    options = get_options()
+    # check binary
+    if options.nogui:
+        sumoBinary = checkBinary('sumo')
+    else:
+        sumoBinary = checkBinary('sumo-gui')
+    # traci starts sumo as a subprocess and then this script connects and runs
+    traci.start([sumoBinary, "-c", "demo.sumo.cfg",
+                             "--tripinfo-output", "tripinfo.xml"])
+    run()
